@@ -48,4 +48,25 @@ public class Book {
     public boolean isTaken() {
         return isTaken;
     }
+
+public void setTitle(String title) {
+        this.title = title.toUpperCase();
+    }
+
+    public void setAuthor(String author) {
+        this.author = capitalizeFirstLetter(author);
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public void setTaken(boolean isTaken) {
+        this.isTaken = isTaken;
+    }
+
 }
