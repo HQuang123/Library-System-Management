@@ -16,11 +16,17 @@ public class Book {
  private boolean isTaken;
 
     public Book(String title, String author, String genre, String ISBN) {
-        this.title = title;
-        this.author = author;
+        this.title = title.toUpperCase();
+        this.author = capitalizeFirstLetter(author);
         this.genre = genre;
         this.ISBN = ISBN;
         this.isTaken = false; 
+    }
+  private String capitalizeFirstLetter(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
     }
 
     public String getTitle() {
@@ -42,4 +48,25 @@ public class Book {
     public boolean isTaken() {
         return isTaken;
     }
+
+public void setTitle(String title) {
+        this.title = title.toUpperCase();
+    }
+
+    public void setAuthor(String author) {
+        this.author = capitalizeFirstLetter(author);
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public void setTaken(boolean isTaken) {
+        this.isTaken = isTaken;
+    }
+
 }
