@@ -1,8 +1,17 @@
-package com.mycompany.student;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package LibrarySystemManagement;
 
+/**
+ *
+ * @author huyng
+ */
 class Student {
     private String studentName;
-    private final String studentID;
+    private String studentID;
     private String contactNumber;
 
     public Student(String studentName, String studentID, String contactNumber) {
@@ -23,7 +32,7 @@ class Student {
     }
 
     public String getStudentID() {
-        return studentID;
+        return "HE" +  studentID;
     }
 
     public String getContactNumber() {
