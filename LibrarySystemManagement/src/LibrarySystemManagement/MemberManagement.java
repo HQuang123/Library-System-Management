@@ -8,10 +8,13 @@ package LibrarySystemManagement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 class MemberManagement {
-    private ArrayList<Student> member;
+    private ArrayList<Student> member = new ArrayList<Student>();
+    Scanner input = new Scanner(System.in);
+    public static int count = 0;
 
     public void registerStudent(Student student){
         boolean status = true;
@@ -28,96 +31,136 @@ class MemberManagement {
         }
     }
     
-    public void updateStudent(Student studentId, String studentName, String contactNumber) {
-        boolean status = true;
-        for (Student student : member) {
-            if(student.getStudentID().equals(studentId)){
-                student.setStudentName(studentName);
-                student.setContactNumber(contactNumber);
-                status = false;
-                break;
-            }
-        }
-        if(status){
-            System.out.println("Can not find the student to update information !");
-        }
-        
-    }
-
-    public void deleteStudent(Student studentId) {      
-        boolean status = true;
-        for (Student student : member) {
-            if(student.getStudentID().equals(studentId)){
-                member.remove(student);
-                status = false;
-                break;
-            }
-        }
-        if(status){
-            System.out.println("Can not find the student do delete information");
-        }
-    }
-
-    public void searchStudent(String studentId) {
-        boolean status = true;
-        for (Student student : member) {
-            if(student.getStudentID().equals(studentId)){
-                System.out.println(student);
-                status = false;
-                break;
-            }
-        }
-        if(status){
-            System.out.println("Can not find the student to print out information");
-        }
-    }
-
     public void printAllStudents() {
+        
         if (member.isEmpty()) {
             System.out.println("No students registered.");
         } else {
+            System.out.println("Student Name\t\tStudentId\t\tContact Number");
             for (Student student : member) {
-                System.out.println(student);
+                System.out.println(student.getStudentName() + "\t\t" + student.getStudentID() + "\t\t" + student.getContactNumber());
             }
         }
+    }   
+    
+    public int isStudent(){
+        System.out.println("Enter the StudentId");
+        String studentId = input.nextLine();
+        for (Student student : member) {
+            if(student.getStudentID().equals(studentId)){
+                return member.indexOf(student);
+            }
+        }
+        System.out.println("Student is not Registered");
+        System.out.println("Get Registered First");
+        return -1;
+    }
+    
+    public void checkOutBook(BookManagement book){
+        int studentIndex = this.isStudent();
+        
+        if(studentIndex != -1){
+            System.out.println("Checking out");
+            book.printBooks();
+            Book b = book.checkOutBook();
+            System.out.println("Checking out");
+            if(b!=null){
+                if(member.get(studentIndex).getBooksCount()<=3){
+                    System.out.println("Adding book");
+                    member.get(studentIndex).borrowedBook[member.get(studentIndex).getBooksCount()] = b;
+                    member.get(studentIndex).setBooksCount(member.get(studentIndex).getBooksCount()+1);      
+                    return;
+                }
+                else{
+                    System.out.println("Student can not borrow more than 3 books");
+                    return;
+                }
+            }
+            System.out.println("Book is not Available.");
+        }
+    }
+    
+    public void checkInBook(BookManagement book){
+        
+        int studentIndex = this.isStudent();
+        if(member.get(studentIndex).getBooksCount() == 0){
+            System.out.println("This Student Has Not Borrowed Any Book");
+            return;
+        }
+        if(studentIndex != -1){
+            System.out.println("S.No\t\tBook Name\t\tAuthor Name\t\tRentDate\t\tDueDate\t\tReturnDate\t\tFine");
+            Student student = member.get(studentIndex);
+            for(int i =0; i< student.getBooksCount();i++){
+                System.out.println(
+                student.borrowedBook[i].getISBN()+"\t\t"+
+                student.borrowedBook[i].getTitle() + "\t\t"+
+                student.borrowedBook[i].getAuthor()+"\t\t"+
+                student.borrowedBook[i].getRentDate()+"\t\t"+
+                student.borrowedBook[i].getDueDate()+"\t\t"+
+                student.borrowedBook[i].getReturnDate()+"\t\t"
+                );
+            }
+            //display message
+            System.out.println("Enter Serial Number of Book to be Checked In:");
+            String ISBN = input.nextLine();
+            for(int i =0; i< student.getBooksCount();i++){
+                 if(student.getBorrowedBook()[i].getISBN().equals(ISBN)){
+                     book.checkInBook(student.getBorrowedBook()[i]);
+                     System.out.println("Your fine: " +student.borrowedBook[i].getFine() );
+                     student.borrowedBook[i].setRentDate(null);
+                     student.borrowedBook[i].setReturnDate(null);
+                     student.borrowedBook[i].setDueDate(null);
+                     student.borrowedBook[i] = null;
+                     return;
+                 }
+                
+                System.out.println("Book of Serial No " + ISBN + "not found");             
+    }
+    }
+    
+    }
+    public void updateStudent() {
+        System.out.println("Enter the student id");
+        String studentId = input.nextLine();
+        for (Student student : member) {
+            if(student.getStudentID().equals(studentId)){
+                System.out.println("Enter the student name:");
+                student.setStudentName(input.nextLine());
+                System.out.println("Enter the student contact");
+                student.setContactNumber(input.nextLine());
+                return;
+            }
+        }
+        System.out.println("Can not find the student to update information !");
+        
     }
 
-//    public void menuStudent() {
-//        while (true) {
-//            System.out.println("\nStudent Management System");
-//            System.out.println("1. Register new student");
-//            System.out.println("2. Update student information");
-//            System.out.println("3. Delete student account");
-//            System.out.println("4. Search for student");
-//            System.out.println("5. Print list of students");
-//            System.out.println("6. Exit");
-//            System.out.print("Choose an option: ");
-//            int choice = scanner.nextInt();
-//            scanner.nextLine(); // Consume newline
-//
-//            switch (choice) {
-//                case 1:
-//                    registerStudent();
-//                    break;
-//                case 2:
-//                    updateStudent();
-//                    break;
-//                case 3:
-//                    deleteStudent();
-//                    break;
-//                case 4:
-//                    searchStudent();
-//                    break;
-//                case 5:
-//                    printAllStudents();
-//                    break;
-//                case 6:
-//                    System.out.println("Exiting...");
-//                    return;
-//                default:
-//                    System.out.println("Invalid choice. Please try again.");
-//            }
-//        }
-//    }
+    public void deleteStudent() { 
+        System.out.println("Enter the student id");
+        String studentId = input.nextLine();
+        for (Student student : member) {
+            if(student.getStudentID().equals(studentId)){
+                member.remove(student);
+                System.out.println("Delele Successfully");
+                return;
+            }
+        }
+        System.out.println("Can not find the student to delete information !");
+    }
+
+    public void searchStudent() {
+        System.out.println("Enter the student id");
+        String studentId = input.nextLine();
+        for (Student student : member) {
+            if(student.getStudentID().equals(studentId)){
+                System.out.println(student);
+                return;
+            }
+        }
+        
+        System.out.println("Can not find the student to print out information");
+    }
+
+    
     
 }

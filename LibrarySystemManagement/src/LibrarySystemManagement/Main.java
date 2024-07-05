@@ -1,58 +1,109 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package LibrarySystemManagement;
 
+// Java Program to Illustrate Application CLass
+// To Create The Menu For the Program
+
+// Importing required classes
 import java.util.Scanner;
 
-/**
- *
- * @author huyng
- */
+// Class
 public class Main {
-    public static void main(String[] args) {
-        MemberManagement studentList = new MemberManagement();
-        Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
-        sc.nextLine(); // Consume newline
 
-//            switch (choice) {
-//                case 1:
-//                    studentList.registerStudent();
-//                    break;
-//                case 2:
-//                    updateStudent();
-//                    break;
-//                case 3:
-//                    deleteStudent();
-//                    break;
-//                case 4:
-//                    searchStudent();
-//                    break;
-//                case 5:
-//                    printAllStudents();
-//                    break;
-//                case 6:
-//                    System.out.println("Exiting...");
-//                    return;
-//                default:
-//                    System.out.println("Invalid choice. Please try again.");
-//            }
-    }
-    
-    public static void menu(){
-        while (true) {
-            System.out.println("\nStudent Management System");
-            System.out.println("1. Register new student");
-            System.out.println("2. Update student information");
-            System.out.println("3. Delete student account");
-            System.out.println("4. Search for student");
-            System.out.println("5. Print list of students");
-            System.out.println("6. Exit");
-            System.out.print("Choose an option: ");
-            
-        }
-    }
+	// Main driver method
+	public static void main(String[] args)
+	{
+		// Creating object of Scanner class
+		// to take input from user
+		Scanner input = new Scanner(System.in);
+
+		// Displaying menu
+		System.out.println(
+			"********************Welcome to the GFG Library!********************");
+		System.out.println(
+			"				 Select From The Following Options:			 ");
+		System.out.println(
+			"**********************************************************************");
+
+		// Creating object of Book class
+		BookManagement ob = new BookManagement();
+		// Creating object of MemberManagement class
+		MemberManagement obStudent = new MemberManagement();
+
+		int choice;
+		int searchChoice;
+
+		// Creating menu
+		// using do-while loop
+		do {
+
+			ob.dispMenu();
+			choice = input.nextInt();
+
+			// Switch case
+			switch (choice) {
+
+				// Case
+			case 1:
+				Book b = new Book();
+				ob.addBook(b);
+				break;
+
+				// Case
+			case 2:
+				ob.searchBookbySNo();
+				break;
+                                
+				// Case
+			case 3:
+				ob.printBooks();
+				break;
+
+				// Case
+			case 4:
+				Student s = new Student();
+				obStudent.registerStudent(s);
+				break;
+
+				// Case
+			case 5:
+				obStudent.printAllStudents();
+				break;
+
+				// Case
+			case 6:
+				obStudent.checkOutBook(ob);
+				break;
+
+				// Case
+			case 7:
+				obStudent.checkInBook(ob);
+				break;
+
+				
+                        case 8: 
+                                obStudent.deleteStudent();
+                                break;
+                        case 9:
+                                obStudent.updateStudent();
+                                break;
+                        case 10:
+                                ob.deleteBook();
+                                break;
+                                
+                        case 11:
+                                ob.updateBook();
+                                break;
+                        //
+			default:
+
+				// Print statement
+				System.out.println("ENTER BETWEEN 0 TO 8.");
+			}
+
+		}
+
+		// Checking condition at last where we are
+		// checking case entered value is not zero
+		while (choice != 0);
+	}
 }

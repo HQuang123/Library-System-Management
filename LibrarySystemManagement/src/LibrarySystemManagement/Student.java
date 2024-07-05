@@ -6,6 +6,7 @@
 package LibrarySystemManagement;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  *
@@ -15,18 +16,27 @@ class Student {
     private String studentName;
     private String studentID;
     private String contactNumber;
+    public Book borrowedBook[] = new Book[3];
+    private int booksCount;
+    Scanner input = new Scanner(System.in);
 
-    public Student(String studentName, String studentID, String contactNumber) {
-        this.studentName = capitalizeFirstLetter(studentName);
-        this.studentID = studentID;
-        this.contactNumber = contactNumber;
+    public Student() {
+        System.out.println("Enter Student Name");
+        this.studentName = capitalizeFirstLetter(input.nextLine());
+        System.out.println("Enter StudentId");
+        this.studentID = input.nextLine();
+        System.out.println("Enter Contact Number");
+        this.contactNumber = input.nextLine();
     }
 
     private String capitalizeFirstLetter(String name) {
-        if (name == null || name.isEmpty()) {
-            return name;
+        String[] nameList = name.split(" ");
+        for(int i = 0;i<nameList.length;i++){
+            nameList[i] = Character.toUpperCase(nameList[i].charAt(0)) + nameList[i].substring(1).toLowerCase();
         }
-        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+        
+        return String.join(" ", nameList);
+       
     }
 
     public String getStudentName() {
@@ -34,7 +44,7 @@ class Student {
     }
 
     public String getStudentID() {
-        return "HE" +  studentID;
+        return studentID;
     }
 
     public String getContactNumber() {
@@ -48,6 +58,32 @@ class Student {
     public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
+
+    public int getBooksCount() {
+        return booksCount;
+    }
+
+    public void setBooksCount(int booksCount) {
+        this.booksCount = booksCount;
+    }
+
+    public Book[] getBorrowedBook() {
+        return borrowedBook;
+    }
+
+    public void setBorrowedBook(Book[] borrowedBook) {
+        this.borrowedBook = borrowedBook;
+    }
+
+    public Scanner getInput() {
+        return input;
+    }
+
+    public void setInput(Scanner input) {
+        this.input = input;
+    }
+    
+    
 
     @Override
     public String toString() {
