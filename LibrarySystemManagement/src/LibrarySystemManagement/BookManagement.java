@@ -9,12 +9,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
  * @author Home
  */
-public class BookManagement {
+public class BookManagement  {
     Scanner input = new Scanner(System.in);
     private ArrayList<Book> books;
     private static int count;
@@ -44,14 +45,18 @@ public class BookManagement {
 
     public void updateBook() {
         System.out.println("Enter ISBN to Update");
+        input.nextLine();
         String ISBN = input.nextLine();
         for (Book book : books) {
             if (book.getISBN().equals(ISBN)) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("Enter new author: ");
+                String title = scanner.nextLine();
+                System.out.print("Enter new author: ");
                 String newAuthor = scanner.nextLine();
                 System.out.print("Enter new genre: ");
                 String newGenre = scanner.nextLine();
+                book.setTitle(title);
                 book.setAuthor(newAuthor);
                 book.setGenre(newGenre);
                 System.out.println("Book updated successfully.");
@@ -96,6 +101,23 @@ public class BookManagement {
         
 
     public void printBooks() {
+        int choice;
+        System.out.println("Please Pick The Order to Print");
+        System.out.println("1. Order by ISBN");
+        System.out.println("2. Order by Title");
+        System.out.println("3. Order by Author");
+        System.out.println("4. Order by Genre");
+        choice = input.nextInt();
+        switch(choice){
+            case 1: Collections.sort(books,new SortByISBN());
+                    break;
+            case 2: Collections.sort(books,new SortByTitle());
+                    break;
+            case 3: Collections.sort(books,new SortByAuthor());
+                    break;
+            case 4: Collections.sort(books, new SortByGenre());
+                    break;
+        }
         System.out.println("\t\t\t\t\tSHOWING ALL BOOKS\n");
         System.out.printf("%-5s %-10s %-10s %-20s %-20s %-30s%n","ISBN", "isRented", "RentDate", "Genre", "Author", "Title");
         for (Book book : books) {

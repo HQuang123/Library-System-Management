@@ -13,7 +13,7 @@ import java.util.Scanner;
  *
  * @author Home
  */
-public class Book {
+public class Book  {
     private String title;
     private String author;
     private String genre;
@@ -109,7 +109,7 @@ public class Book {
     }
 
     public void setGenre(String genre) {
-        this.genre = genre;
+        this.genre = capitalizeFirstLetterAuthor(genre);
     }
 
     public void setISBN(String ISBN) {
