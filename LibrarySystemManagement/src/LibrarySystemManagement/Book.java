@@ -131,7 +131,11 @@ public class Book {
             this.fine = days*5000; 
             return this.fine;
         }
-        else{
+        else if(this.returnDate.isBefore(this.dueDate)){
+            return 0;
+        }
+        else {
+            
             Period period = Period.between(this.dueDate, this.returnDate);
             int days = period.getDays();
             this.fine =  days*5000; 

@@ -88,16 +88,26 @@ class MemberManagement {
             return;
         }
         if(studentIndex != -1){
-            System.out.println("S.No\t\tBook Name\t\tAuthor Name\t\tRentDate\t\tDueDate\t\tReturnDate\t\tFine");
+//            System.out.println("S.No\t\tBook Name\t\tAuthor Name\t\tRentDate\t\tDueDate\t\tReturnDate\t\tFine");
+            System.out.printf("%-10s %-25s %-25s %-10s %-10s %-10s %-10s%n", "S.No", "Book Name", "Author", "RentDate", "DueDate","ReturnDate", "Fine");
             Student student = member.get(studentIndex);
             for(int i =0; i< student.getBooksCount();i++){
-                System.out.println(
-                student.borrowedBook[i].getISBN()+"\t\t"+
-                student.borrowedBook[i].getTitle() + "\t\t"+
-                student.borrowedBook[i].getAuthor()+"\t\t"+
-                student.borrowedBook[i].getRentDate()+"\t\t"+
-                student.borrowedBook[i].getDueDate()+"\t\t"+
-                student.borrowedBook[i].getReturnDate()+"\t\t"
+//                System.out.printf(
+//                student.borrowedBook[i].getISBN()+"\t\t"+
+//                student.borrowedBook[i].getTitle() + "\t\t"+
+//                student.borrowedBook[i].getAuthor()+"\t\t"+
+//                student.borrowedBook[i].getRentDate()+"\t\t"+
+//                student.borrowedBook[i].getDueDate()+"\t\t"+
+//                student.borrowedBook[i].getReturnDate()+"\t\t"
+//                );
+                System.out.printf(
+                "%-5s %-30s %-30s %-10s %-10s %-15%n",        
+                student.borrowedBook[i].getISBN(),
+                student.borrowedBook[i].getTitle(),
+                student.borrowedBook[i].getAuthor(),
+                student.borrowedBook[i].getRentDate(),
+                student.borrowedBook[i].getDueDate(),
+                student.borrowedBook[i].getReturnDate()
                 );
             }
             //display message

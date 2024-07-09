@@ -6,8 +6,10 @@ package LibrarySystemManagement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Scanner;
 import java.util.ArrayList;
+
 /**
  *
  * @author Home
@@ -17,6 +19,7 @@ public class BookManagement {
     private ArrayList<Book> books;
     private static int count;
     Scanner sc = new Scanner(System.in);
+    DateTimeFormatter formatter = new DateTimeFormatterBuilder().appendOptional(DateTimeFormatter.ofPattern("d-M-yyyy")).appendOptional(DateTimeFormatter.ofPattern("dd-MM-yyyy")).toFormatter();
 
     public BookManagement() {
         books  = new ArrayList<>();
@@ -40,7 +43,7 @@ public class BookManagement {
     }
 
     public void updateBook() {
-        System.out.println("Enter ISBN to Delete");
+        System.out.println("Enter ISBN to Update");
         String ISBN = input.nextLine();
         for (Book book : books) {
             if (book.getISBN().equals(ISBN)) {
@@ -94,16 +97,9 @@ public class BookManagement {
 
     public void printBooks() {
         System.out.println("\t\t\t\t\tSHOWING ALL BOOKS\n");
-        System.out.println(
-            "ISBN\t\tisRented\t\tRentDate\t\tGenre\t\tAuthor\t\tTitle");
+        System.out.printf("%-5s %-10s %-10s %-20s %-20s %-30s%n","ISBN", "isRented", "RentDate", "Genre", "Author", "Title");
         for (Book book : books) {
-                System.out.println(book.getISBN() + "\t\t"
-                    + book.getIsTaken() + "\t\t"
-                    + book.getRentDate() + "\t\t"
-                    + book.getGenre() + "\t\t" 
-                    + book.getAuthor() + "\t\t"
-                    + book.getTitle() + "\t\t"    
-                    );
+            System.out.printf("%-5s %-10s %-10s %-20s %-20s %-30s%n",book.getISBN(),book.getIsTaken(),book.getRentDate(),book.getGenre(),book.getAuthor(),book.getTitle());
         }
     }
     
@@ -115,7 +111,6 @@ public class BookManagement {
         System.out.println(
             "----------------------------------------------------------------------------------------------------------");
         System.out.println("Press 1 to Add new Book.");
-        System.out.println("Press 0 to Exit Application.");
         System.out.println("Press 2 to Search a Book.");
         System.out.println("Press 3 to Show All Books.");
         System.out.println("Press 4 to Register Student.");
@@ -127,7 +122,7 @@ public class BookManagement {
         System.out.println("Press 9 to Update Student");
         System.out.println("Press 10 to Delete Book");
         System.out.println("Press 11 to Update Book");
-
+        System.out.println("Press 12 to Exit Application.");
         System.out.println(
             "-------------------------------------------------------------------------------------------------------");
     }
@@ -155,9 +150,9 @@ public class BookManagement {
         if(bookIndex!=-1){
             books.get(bookIndex).setTaken(true);
             System.out.println("Enter the date to rent(dd-mm-yyyy):");
-            books.get(bookIndex).setRentDate(LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            books.get(bookIndex).setRentDate(LocalDate.parse(input.nextLine(), formatter));
             System.out.println("Enter the due date(dd-mm-yyyy):");
-            books.get(bookIndex).setDueDate(LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            books.get(bookIndex).setDueDate(LocalDate.parse(input.nextLine(), formatter));
             return books.get(bookIndex);
         }
         return null;
@@ -168,7 +163,7 @@ public class BookManagement {
             if(b.equals(book)){
                 book.setTaken(false);
                 System.out.println("Enter the return date(dd-mm-yyyy)");
-                book.setReturnDate(LocalDate.parse(input.nextLine(), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                book.setReturnDate(LocalDate.parse(input.nextLine(), formatter));
                 return;
             }
         }
