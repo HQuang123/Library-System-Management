@@ -20,14 +20,6 @@ class Student {
     private int booksCount;
     Scanner input = new Scanner(System.in);
 
-    public Student() {
-        System.out.println("Enter Student Name");
-        this.studentName = capitalizeFirstLetter(input.nextLine());
-        System.out.println("Enter StudentId");
-        this.studentID = input.nextLine();
-        System.out.println("Enter Contact Number");
-        this.contactNumber = input.nextLine();
-    }
 
     private String capitalizeFirstLetter(String name) {
         String[] nameList = name.split(" ");
@@ -51,28 +43,25 @@ class Student {
         return contactNumber;
     }
 
- 
+    public void setStudentID(String studentID) {
+        this.studentID = studentID;
+    }
+
+    
     public void setStudentName(String studentName) {
-      try {
-            if (!studentName.matches("[a-zA-Z]+")) {
-                throw new IllegalArgumentException("Name should only contain letters and no numbers.");
-            }
-           this.studentName = capitalizeFirstLetter(studentName);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        if (studentName.matches("[a-zA-Z]+")) {
+            this.studentName = capitalizeFirstLetter(studentName);
+        } else {
+            throw new IllegalArgumentException("Student name must contain only letters.");
         }
     }
+   
+    
     public void setContactNumber(String contactNumber) {
-       try {
-            if (!contactNumber.matches("\\d+")) {
-                throw new IllegalArgumentException("Contact number should only contain digits.");
-            }
-            if (contactNumber.length() >= 11) {
-                throw new IllegalArgumentException("Contact number should be less than 11 digits.");
-            }
+       if (contactNumber.matches("\\d{1,10}")) {
             this.contactNumber = contactNumber;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        } else {
+            throw new IllegalArgumentException("Contact number must contain only digits and be less than 11 digits.");
         }
     }
     public int getBooksCount() {

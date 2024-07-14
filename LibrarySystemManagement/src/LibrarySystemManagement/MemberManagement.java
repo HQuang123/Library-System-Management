@@ -17,19 +17,56 @@ class MemberManagement {
     public static int count = 0;
 
     public void registerStudent(Student student){
-        boolean status = true;
+         boolean status = true;
         for (Student student1 : member) {
-            if(student1.getStudentID().equals(student.getStudentID())){
-                System.out.println("The student is already a member !");
+            if (student1.getStudentID().equals(student.getStudentID())) {
+                System.out.println("The student is already a member!");
                 status = false;
                 break;
             }
         }
-        
-        if(status){
-            member.add(student);
+
+        if (status) {
+            while (true) {
+                try {
+                    System.out.println("Enter Student Name:");
+                    student.setStudentName(input.nextLine());
+                     break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
         }
-    }
+                    
+                    System.out.println ("Enter Student ID:");
+                    student.setStudentID(input.nextLine());
+                   
+            
+        
+                    
+                    
+                    if (status) {
+            while (true) {
+                try {
+                    System.out.println("Enter Contact Number:");
+                    student.setContactNumber(input.nextLine());
+                   
+                     break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                
+                }
+            }
+                    
+                    
+                    
+                    member.add(student);
+                    System.out.println("Student registered successfully!");
+                   
+            }
+        }
+    
+
     
     public void printAllStudents() {
         
@@ -130,21 +167,42 @@ class MemberManagement {
     
     }
     public void updateStudent() {
-        System.out.println("Enter the student id");
+        
+        
+       System.out.println("Enter the student id:");
         String studentId = input.nextLine();
         for (Student student : member) {
-            if(student.getStudentID().equals(studentId)){
-                System.out.println("Enter the student name:");
-                student.setStudentName(input.nextLine());
-                System.out.println("Enter the student contact");
-                student.setContactNumber(input.nextLine());
-                return;
+            if (student.getStudentID().equals(studentId)) {
+               
+            while (true) {
+                try {
+                    System.out.println("Enter new Student Name:");
+                    student.setStudentName(input.nextLine());
+                     break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        
+     
+            while (true) {
+                try {
+                    System.out.println("Enter new Contact Number:");
+                    student.setContactNumber(input.nextLine());
+                   
+                     break;
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                
+                }
+            }
             }
         }
-        System.out.println("Can not find the student to update information !");
+        System.out.println("Cannot find the student to update information!");
         
-    }
 
+    }
+    
     public void deleteStudent() { 
         System.out.println("Enter the student id");
         String studentId = input.nextLine();
