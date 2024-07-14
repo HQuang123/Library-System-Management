@@ -51,6 +51,7 @@ class Student {
         return contactNumber;
     }
 
+ 
     public void setStudentName(String studentName) {
       try {
             if (!studentName.matches("[a-zA-Z]+")) {
@@ -61,9 +62,6 @@ class Student {
             System.out.println(e.getMessage());
         }
     }
-
-    
-    
     public void setContactNumber(String contactNumber) {
        try {
             if (!contactNumber.matches("\\d+")) {
@@ -77,7 +75,6 @@ class Student {
             System.out.println(e.getMessage());
         }
     }
-
     public int getBooksCount() {
         return booksCount;
     }
