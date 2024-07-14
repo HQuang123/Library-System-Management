@@ -66,12 +66,21 @@ public class Book  {
         this.author = capitalizeFirstLetterAuthor(input.nextLine());
         System.out.println("Enter The Genre: ");
         this.genre = input.nextLine().toUpperCase();
-        System.out.println("Enter The ISBN");
-        this.ISBN = input.nextLine();
+        while (true) {
+            try {
+                System.out.println("Enter The ISBN : ");
+                this.ISBN = input.nextLine();
+
+                Long.parseLong(this.ISBN);
+
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid ISBN format. ISBN should contain only numeric digits.");
+            }
+        }
         this.isTaken = false;
     }
-  
-    private String capitalizeFirstLetterAuthor(String author) {
+        private String capitalizeFirstLetterAuthor(String author) {
         String[] nameList = author.split(" ");
         for(int i  = 0 ; i< nameList.length;i++){
             nameList[i] = nameList[i].substring(0, 1).toUpperCase() + nameList[i].substring(1).toLowerCase();
