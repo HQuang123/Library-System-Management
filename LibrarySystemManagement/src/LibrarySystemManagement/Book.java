@@ -78,6 +78,7 @@ public class Book  {
                 System.out.println("Invalid ISBN format. ISBN should contain only numeric digits.");
             }
         }
+        this.isTaken = false;
     }
         private String capitalizeFirstLetterAuthor(String author) {
         String[] nameList = author.split(" ");
