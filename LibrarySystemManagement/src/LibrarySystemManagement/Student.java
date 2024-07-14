@@ -52,11 +52,30 @@ class Student {
     }
 
     public void setStudentName(String studentName) {
-        this.studentName = capitalizeFirstLetter(studentName);
+      try {
+            if (!studentName.matches("[a-zA-Z]+")) {
+                throw new IllegalArgumentException("Name should only contain letters and no numbers.");
+            }
+           this.studentName = capitalizeFirstLetter(studentName);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
+    
+    
     public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+       try {
+            if (!contactNumber.matches("\\d+")) {
+                throw new IllegalArgumentException("Contact number should only contain digits.");
+            }
+            if (contactNumber.length() >= 11) {
+                throw new IllegalArgumentException("Contact number should be less than 11 digits.");
+            }
+            this.contactNumber = contactNumber;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public int getBooksCount() {
