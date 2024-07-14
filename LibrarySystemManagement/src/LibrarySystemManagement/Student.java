@@ -21,16 +21,38 @@ class Student {
     Scanner input = new Scanner(System.in);
 
     public Student() {
-        System.out.println("Enter Student Name");
-        this.studentName = capitalizeFirstLetter(input.nextLine());
+        while(true){
+            try{
+            System.out.println("Enter Student Name");
+            this.studentName = capitalizeFirstLetter(input.nextLine());
+            if (!this.studentName.matches("[A-Za-z.\\s_-]+$")) {
+                    throw new IllegalArgumentException("Name should only contain letters and no numbers.");
+            }
+            break;
+            }
+            catch(IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }        
         System.out.println("Enter StudentId");
         this.studentID = input.nextLine();
-        System.out.println("Enter Contact Number");
-        this.contactNumber = input.nextLine();
+        while(true){
+            try{
+            System.out.println("Enter Contact Number");
+            this.contactNumber = input.nextLine();
+            if (!this.contactNumber.matches("\\d{0,15}")) {
+                    throw new IllegalArgumentException("Number should only contain numbers.");
+            }
+            break;
+            }
+            catch(IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }        
     }
 
     private String capitalizeFirstLetter(String name) {
-        String[] nameList = name.split(" ");
+        String[] nameList = name.split("\\s+");
         for(int i = 0;i<nameList.length;i++){
             nameList[i] = Character.toUpperCase(nameList[i].charAt(0)) + nameList[i].substring(1).toLowerCase();
         }
@@ -51,12 +73,38 @@ class Student {
         return contactNumber;
     }
 
-    public void setStudentName(String studentName) {
-        this.studentName = capitalizeFirstLetter(studentName);
+    public void setStudentName() {
+        System.out.println("Enter Student Name");
+        this.studentName = capitalizeFirstLetter(input.nextLine());
+        while(true){
+            try{
+            System.out.println("Enter Student Name");
+            this.studentName = capitalizeFirstLetter(input.nextLine());
+            if (!this.studentName.matches("[A-Za-z.\\s_-]+$")) {
+                    throw new IllegalArgumentException("Name should only contain letters and no numbers.");
+            }
+            break;
+            }
+            catch(IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+    public void setContactNumber() {
+       while(true){
+            try{
+            System.out.println("Enter Contact Number");
+            this.contactNumber = input.nextLine();
+            if (!this.contactNumber.matches("\\d{0,15}")) {
+                    throw new IllegalArgumentException("Number should only contain numbers and do not have leading 0.");
+            }
+            break;
+            }
+            catch(IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     public int getBooksCount() {

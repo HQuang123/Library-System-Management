@@ -36,12 +36,16 @@ class MemberManagement {
         if (member.isEmpty()) {
             System.out.println("No students registered.");
         } else {
-            System.out.println("Student Name\t\tStudentId\t\tContact Number");
+            System.out.printf("%-20s %-15s %-15s%n", "Student Name", "Student ID", "Contact Number");
             for (Student student : member) {
-                System.out.println(student.getStudentName() + "\t\t" + student.getStudentID() + "\t\t" + student.getContactNumber());
-            }
+                System.out.printf("%-20s %-15s %-15s%n",
+                student.getStudentName(),
+                student.getStudentID(),
+                student.getContactNumber());
+    }
         }
     }   
+
     
     public int isStudent(){
         System.out.println("Enter the StudentId");
@@ -88,26 +92,18 @@ class MemberManagement {
             return;
         }
         if(studentIndex != -1){
-//            System.out.println("S.No\t\tBook Name\t\tAuthor Name\t\tRentDate\t\tDueDate\t\tReturnDate\t\tFine");
-            System.out.printf("%-10s %-25s %-25s %-10s %-10s %-10s %-10s%n", "S.No", "Book Name", "Author", "RentDate", "DueDate","ReturnDate", "Fine");
+            System.out.printf("%-10s %-25s %-15s %-15s %-15s %-15s %-10s%n", "S.No", "Book Name", "Author", "RentDate", "DueDate","ReturnDate", "Fine");
             Student student = member.get(studentIndex);
             for(int i =0; i< student.getBooksCount();i++){
-//                System.out.printf(
-//                student.borrowedBook[i].getISBN()+"\t\t"+
-//                student.borrowedBook[i].getTitle() + "\t\t"+
-//                student.borrowedBook[i].getAuthor()+"\t\t"+
-//                student.borrowedBook[i].getRentDate()+"\t\t"+
-//                student.borrowedBook[i].getDueDate()+"\t\t"+
-//                student.borrowedBook[i].getReturnDate()+"\t\t"
-//                );
                 System.out.printf(
-                "%-5s %-30s %-30s %-10s %-10s %-15%n",        
+                "%-10s %-25s %-15s %-15s %-15s %-15s %-10s%n",        
                 student.borrowedBook[i].getISBN(),
                 student.borrowedBook[i].getTitle(),
                 student.borrowedBook[i].getAuthor(),
                 student.borrowedBook[i].getRentDate(),
                 student.borrowedBook[i].getDueDate(),
-                student.borrowedBook[i].getReturnDate()
+                student.borrowedBook[i].getReturnDate(),
+                String.format("%.0f", student.borrowedBook[i].getFine())
                 );
             }
             //display message
@@ -116,10 +112,10 @@ class MemberManagement {
             for(int i =0; i< student.getBooksCount();i++){
                  if(student.getBorrowedBook()[i].getISBN().equals(ISBN)){
                      book.checkInBook(student.getBorrowedBook()[i]);
-                     System.out.println("Your fine: " +student.borrowedBook[i].getFine() );
-                     student.borrowedBook[i].setRentDate(null);
-                     student.borrowedBook[i].setReturnDate(null);
-                     student.borrowedBook[i].setDueDate(null);
+                     System.out.println("Your fine: " + String.format("%.0f", student.borrowedBook[i].getFine()) );
+                     student.borrowedBook[i].resetRentDate();
+                     student.borrowedBook[i].resetDueDate();
+                     student.borrowedBook[i].resetReturnDate();
                      student.borrowedBook[i] = null;
                      return;
                  }
@@ -134,10 +130,8 @@ class MemberManagement {
         String studentId = input.nextLine();
         for (Student student : member) {
             if(student.getStudentID().equals(studentId)){
-                System.out.println("Enter the student name:");
-                student.setStudentName(input.nextLine());
-                System.out.println("Enter the student contact");
-                student.setContactNumber(input.nextLine());
+                student.setStudentName();
+                student.setContactNumber();
                 return;
             }
         }

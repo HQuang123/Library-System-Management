@@ -45,20 +45,12 @@ public class BookManagement  {
 
     public void updateBook() {
         System.out.println("Enter ISBN to Update");
-        input.nextLine();
         String ISBN = input.nextLine();
         for (Book book : books) {
             if (book.getISBN().equals(ISBN)) {
-                Scanner scanner = new Scanner(System.in);
-                System.out.print("Enter new author: ");
-                String title = scanner.nextLine();
-                System.out.print("Enter new author: ");
-                String newAuthor = scanner.nextLine();
-                System.out.print("Enter new genre: ");
-                String newGenre = scanner.nextLine();
-                book.setTitle(title);
-                book.setAuthor(newAuthor);
-                book.setGenre(newGenre);
+                book.setTitle();
+                book.setAuthor();
+                book.setGenre();
                 System.out.println("Book updated successfully.");
                 return;
             }
@@ -68,6 +60,7 @@ public class BookManagement  {
 
     public void deleteBook() {
         System.out.println("Enter ISBN to Delete");
+        input.nextLine();
         String ISBN = input.nextLine();
         for (Book book : books) {
             if(book.getISBN().equals(ISBN)){
@@ -86,11 +79,9 @@ public class BookManagement  {
         String ISBN = input.nextLine();
         for (Book book : books) {
             if (book.getISBN().equals(ISBN)) {
-                System.out.println(book.getISBN() + "\t\t"
-                    + book.getTitle() + "\t\t"
-                    + book.getAuthor() + "\t\t"
-                    + "Status:" + book.getIsTaken() + "\t\t"
-                    );
+                System.out.printf("%-10s %-10s %-15s %-15s %-15s %-20s %-20s%n","ISBN", "isRented", "RentDate", "DueDate", "Genre", "Author", "Title");
+                System.out.printf("%-10s %-10s %-15s %-15s %-15s %-20s %-20s%n",book.getISBN(),book.getIsTaken(),book.getRentDate(),book.getDueDate(),book.getGenre(),book.getAuthor(),book.getTitle());
+     
                 flag++;
                 return;
             }
@@ -98,6 +89,7 @@ public class BookManagement  {
         if(flag == 0){
         System.out.println("Book with ISBN " + ISBN + " not found.");}
     }
+
         
 
     public void printBooks() {
@@ -119,11 +111,12 @@ public class BookManagement  {
                     break;
         }
         System.out.println("\t\t\t\t\tSHOWING ALL BOOKS\n");
-        System.out.printf("%-5s %-10s %-10s %-20s %-20s %-30s%n","ISBN", "isRented", "RentDate", "Genre", "Author", "Title");
+        System.out.printf("%-10s %-10s %-15s %-15s %-15s %-20s %-20s%n","ISBN", "isRented", "RentDate", "DueDate", "Genre", "Author", "Title");
         for (Book book : books) {
-            System.out.printf("%-5s %-10s %-10s %-20s %-20s %-30s%n",book.getISBN(),book.getIsTaken(),book.getRentDate(),book.getGenre(),book.getAuthor(),book.getTitle());
+            System.out.printf("%-10s %-10s %-15s %-15s %-15s %-20s %-20s%n",book.getISBN(),book.getIsTaken(),book.getRentDate(),book.getDueDate(),book.getGenre(),book.getAuthor(),book.getTitle());
         }
     }
+
     
     
     public void dispMenu()
@@ -132,19 +125,20 @@ public class BookManagement  {
         // Displaying menu
         System.out.println(
             "----------------------------------------------------------------------------------------------------------");
+        System.out.println("Press 0 to Exit.");
         System.out.println("Press 1 to Add new Book.");
         System.out.println("Press 2 to Search a Book.");
         System.out.println("Press 3 to Show All Books.");
         System.out.println("Press 4 to Register Student.");
         System.out.println(
             "Press 5 to Show All Registered Students.");
-        System.out.println("Press 6 to Check Out Book. ");
-        System.out.println("Press 7 to Check In Book");
-        System.out.println("Press 8 to Delete Student");
-        System.out.println("Press 9 to Update Student");
-        System.out.println("Press 10 to Delete Book");
-        System.out.println("Press 11 to Update Book");
-        System.out.println("Press 12 to Exit Application.");
+        System.out.println("Press 6 to Check Out Book.");
+        System.out.println("Press 7 to Check In Book.");
+        System.out.println("Press 8 to Delete Student.");
+        System.out.println("Press 9 to Update Student.");
+        System.out.println("Press 10 to Delete Book.");
+        System.out.println("Press 11 to Update Book.");
+        System.out.println("Press 12 to Extend Due Date.");
         System.out.println(
             "-------------------------------------------------------------------------------------------------------");
     }
@@ -167,14 +161,13 @@ public class BookManagement  {
     public Book checkOutBook(){
         System.out.println("Remember: Each Student Can Only Borrow Up To 3 Books");
         System.out.println("Enter Serial No of Book to be Checked Out.");
+        input.nextLine();
         String ISBN = input.nextLine();
         int bookIndex = isAvailable(ISBN);
         if(bookIndex!=-1){
             books.get(bookIndex).setTaken(true);
-            System.out.println("Enter the date to rent(dd-mm-yyyy):");
-            books.get(bookIndex).setRentDate(LocalDate.parse(input.nextLine(), formatter));
-            System.out.println("Enter the due date(dd-mm-yyyy):");
-            books.get(bookIndex).setDueDate(LocalDate.parse(input.nextLine(), formatter));
+            books.get(bookIndex).setRentDate();
+            books.get(bookIndex).setDueDate();
             return books.get(bookIndex);
         }
         return null;
@@ -191,6 +184,19 @@ public class BookManagement  {
         }
     }
     
-    
-    
+    //extend due date
+    public void extendDuedate() {
+        System.out.println("Enter ISBN of the Book to Extend Due date:");
+        String ISBN = input.nextLine();
+        for (Book book : books) {
+            if (book.getISBN().equals(ISBN) && book.getIsTaken()) {
+                System.out.println("Current Due Date: " + book.getDueDate());
+                book.setDueDate();
+                System.out.println("Due date extended successfully.");
+                return;
+            }
+        }
+        System.out.println("Book with ISBN " + ISBN + " not found or not borrowed.");
+}
+
 }

@@ -43,6 +43,11 @@ public class Main {
 			switch (choice) {
 
 				// Case
+                        case 0:
+                                System.out.println("See You Later1");
+                                choice = 0 ;
+                                break;
+                                
 			case 1:
 				Book b = new Book();
 				ob.addBook(b);
@@ -94,10 +99,13 @@ public class Main {
                                 ob.updateBook();
                                 break;
                         //
-			default:
+                        case 12:
+                                ob.extendDuedate();
+                                break;
 
+			default:
 				// Print statement
-				System.out.println("ENTER BETWEEN 0 TO 8.");
+				System.out.println("ENTER BETWEEN 1 TO 12.");
 			}
 
 		}
