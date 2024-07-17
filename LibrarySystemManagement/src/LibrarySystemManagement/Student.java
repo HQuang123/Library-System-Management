@@ -74,8 +74,6 @@ class Student {
     }
 
     public void setStudentName() {
-        System.out.println("Enter Student Name");
-        this.studentName = capitalizeFirstLetter(input.nextLine());
         while(true){
             try{
             System.out.println("Enter Student Name");
